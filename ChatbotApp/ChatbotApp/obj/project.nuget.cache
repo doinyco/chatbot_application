@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "37hHoOD13S8v4lG0OlKAayuJTtBCZ4ONxGfJphNdIhqWouunBPEfEy1CkrXHAxfH9aIc+kvIfJ/eEeUfPd7gMA==",
+  "dgSpecHash": "mqfHf7fCh0E2XKDsNQMPipVSXAVReNJMnmwB+Q8y+6pm2PY/l1K3hHAeq5f4q/RbyDBHrIBsrv1SybU9YTNPWA==",
   "success": true,
   "projectFilePath": "/Users/doinacolun/Desktop/chatbot_application/ChatbotApp/ChatbotApp/ChatbotApp.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/doinacolun/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

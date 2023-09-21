@@ -1,10 +1,15 @@
 ﻿@page "/"
 
+@using Newtonsoft.Json;
+@using System.Text;
+@using System.Net.Http;
+
 <PageTitle>Chatbot</PageTitle>
 
 <div class="container">
     <div class="row">
         <div class="col-4">
+            <p>@testing</p>
         </div>
         <div class="col-4">
             <div class="messages">
@@ -23,16 +28,38 @@
 
 @code{
     public string message;
+    public string testing;
+    private static HttpClient Http = new HttpClient();
 
     protected override async Task OnInitializedAsync()
     {
+        // OpenAI API key
+        var apiKey = "API-KEY";
 
+        if (!Http.DefaultRequestHeaders.Contains("Authorization"))
+        {
+            Http.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+        }
     }
 
     public async Task SendMessage()
     {
+        // JSON content for the API call
+        var jsonContent = new
+        {
+            prompt = message,
+            model = "gpt-3.5",
+            max_tokens = 1000
+        };
 
+        // Make the API call
+        var responseContent = await Http.PostAsync("https://api.openai.com/v1/completions", new StringContent(JsonConvert.SerializeObject(jsonContent), Encoding.UTF8, "application/json"));
+
+        // Read the response as a string
+        var resContext = await responseContent.Content.ReadAsStringAsync();
+
+        // Deserialize the response into a dynamic object
+        var data = JsonConvert.DeserializeObject<dynamic>(resContext);
+        testing = data.choices[0].text;
     }
 }
-
-
