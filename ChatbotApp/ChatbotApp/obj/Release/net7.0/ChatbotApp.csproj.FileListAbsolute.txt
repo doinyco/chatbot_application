@@ -1,0 +1,7 @@
+/Users/doinacolun/Projects/ChatbotApp/ChatbotApp/obj/Release/net7.0/ChatbotApp.GeneratedMSBuildEditorConfig.editorconfig
+/Users/doinacolun/Projects/ChatbotApp/ChatbotApp/obj/Release/net7.0/ChatbotApp.AssemblyInfoInputs.cache
+/Users/doinacolun/Projects/ChatbotApp/ChatbotApp/obj/Release/net7.0/ChatbotApp.AssemblyInfo.cs
+/Users/doinacolun/Projects/ChatbotApp/ChatbotApp/obj/Release/net7.0/ChatbotApp.csproj.CoreCompileInputs.cache
+/Users/doinacolun/Projects/ChatbotApp/ChatbotApp/obj/Release/net7.0/ChatbotApp.MvcApplicationPartsAssemblyInfo.cache
+/Users/doinacolun/Projects/ChatbotApp/ChatbotApp/obj/Release/net7.0/ChatbotApp.RazorAssemblyInfo.cache
+/Users/doinacolun/Projects/ChatbotApp/ChatbotApp/obj/Release/net7.0/ChatbotApp.RazorAssemblyInfo.cs
