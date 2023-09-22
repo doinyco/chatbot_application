@@ -68,18 +68,22 @@ a, .btn-link {
     }
 
 .messages {
-    height: 800px;
-    border: 1px solid black;
+    height: 600px;
+    min-height: 600px;
     width: 90%;
-    border-radius: 8px;
+    border-radius: 20px 20px 0 0;
+    background-color: #eee;
+    padding: 20px;
+    overflow-y: scroll;
 }
 
 .response {
+    float: left;
     background: gray;
     width: 80%;
     padding: 20px;
     margin: 6px 20px;
-    border-radius: 20px;
+    border-radius: 20px 20px 20px 0;
     color: white;
     font-size: 13px;
 }
@@ -90,9 +94,29 @@ a, .btn-link {
     width: 80%;
     padding: 20px;
     margin: 6px 20px;
-    border-radius: 20px;
+    border-radius: 20px 20px 0 20px;
     color: white;
     font-size: 13px;
+}
+
+.textMessage input {
+    width: 90%;
+    padding: 20px;
+    border: none;
+    background: lightgray;
+}
+
+.textMessage input:focus {
+    outline: none;
+}
+
+.textMessage button {
+    width: 90%;
+    padding: 10px;
+    color: white;
+    background: dodgerblue;
+    border: none;
+    border-radius: 0 0 20px 20px;
 }
 
 

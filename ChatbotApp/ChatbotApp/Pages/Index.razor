@@ -13,8 +13,17 @@
         </div>
         <div class="col-4">
             <div class="messages">
-                <div class="response">Test question</div>
-                <div class="question">Test answer</div>
+                @for (int i = 0; i < messages.Count; i++)
+                {
+                    @if (i % 2 == 0)
+                    {
+                        <div class="question">@messages[i]</div>
+                    }
+                    else
+                    {
+                        <div class="response">@messages[i]</div>
+                    }
+                }
             </div>
             <div class="textMessage">
                 <input @bind="message" />
@@ -29,21 +38,27 @@
 @code{
     public string message;
     public string testing;
+    public List<string> messages = new List<string>();
     private static HttpClient Http = new HttpClient();
 
     protected override async Task OnInitializedAsync()
     {
-        // OpenAI API key
-        var apiKey = "API-KEY";
-
-        if (!Http.DefaultRequestHeaders.Contains("Authorization"))
-        {
-            Http.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
-        }
     }
 
     public async Task SendMessage()
     {
+        if (string.IsNullOrWhiteSpace(message))
+        {
+            // Do nothing if the message is empty or contains only whitespace
+            return;
+        }
+        Http = new HttpClient();
+        messages.Add(message);
+
+        var apiKey = "API-KEY";
+        Http.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+
+
         // JSON content for the API call
         var jsonContent = new
         {
@@ -52,14 +67,41 @@
             max_tokens = 1000
         };
 
-        // Make the API call
-        var responseContent = await Http.PostAsync("https://api.openai.com/v1/completions", new StringContent(JsonConvert.SerializeObject(jsonContent), Encoding.UTF8, "application/json"));
+        try
+        {
+            // Make the API call
+            var responseContent = await Http.PostAsync("https://api.openai.com/v1/completions", new StringContent(JsonConvert.SerializeObject(jsonContent), Encoding.UTF8, "application/json"));
 
-        // Read the response as a string
-        var resContext = await responseContent.Content.ReadAsStringAsync();
+            // Check if the response is successful
+            if (responseContent.IsSuccessStatusCode)
+            {
+                // Read the response as a string
+                var resContext = await responseContent.Content.ReadAsStringAsync();
 
-        // Deserialize the response into a dynamic object
-        var data = JsonConvert.DeserializeObject<dynamic>(resContext);
-        testing = data.choices[0].text;
+                // Deserialize the response into a dynamic object
+                var data = JsonConvert.DeserializeObject<dynamic>(resContext);
+
+                // Check if 'data' and 'choices' are not null before accessing 'text'
+                if (data != null && data.choices != null && data.choices.Count > 0 && data.choices[0].text != null)
+                {
+                    messages.Add(data.choices[0].text.ToString());
+                }
+                else
+                {
+                    messages.Add("No response text available.");
+                }
+            }
+            else
+            {
+                messages.Add("API request failed with status code: " + responseContent.StatusCode);
+            }
+        }
+        catch (Exception ex)
+        {
+            messages.Add("Error: " + ex.Message);
+        }
+        // Clear the message input field after sending input message
+        message = "";
+        StateHasChanged();
     }
 }
